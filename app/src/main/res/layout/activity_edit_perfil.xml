@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/background_gradient"
+    android:gravity="center"
+    tools:context=".EditProfileActivity">
+
+    <TextView
+        android:id="@+id/tvProfileTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Editar Mi Perfil"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="Título de pantalla de edición"/>
+
+    <EditText
+        android:id="@+id/etNombreDetalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre"
+        android:textColorHint="#B0FFFFFF"
+        android:textColor="@color/white"
+        android:inputType="textPersonName"
+        android:backgroundTint="@color/white"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/etCorreoDetalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Correo Electrónico"
+        android:textColorHint="#B0FFFFFF"
+        android:textColor="@color/white"
+        android:inputType="textEmailAddress"
+        android:backgroundTint="@color/white"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/etEdadDetalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Edad"
+        android:textColorHint="#B0FFFFFF"
+        android:textColor="@color/white"
+        android:inputType="number"
+        android:backgroundTint="@color/white"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btnGuardarCambios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Guardar Cambios"
+        android:textSize="18sp"
+        android:backgroundTint="@color/teal_700"/>
+
+    <Button
+        android:id="@+id/btnEliminarCuenta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Eliminar Cuenta"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/red"
+        android:contentDescription="Botón para eliminar la cuenta"/>
+
+</LinearLayout>

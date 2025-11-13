@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/background_gradient"
+    android:gravity="center"
+    tools:context=".ProfileActivity">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/lentes"
+        android:contentDescription="Icono de perfil de usuario"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mi Perfil"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="Título de pantalla de perfil"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="32dp"
+        android:padding="16dp"
+        android:background="#30FFFFFF"> <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre: Cargando..."
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="Nombre del usuario"/>
+
+        <TextView
+            android:id="@+id/tvUserEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email: Cargando..."
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="Correo electrónico del usuario"/>
+
+        <TextView
+            android:id="@+id/tvUserEdad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edad: Cargando..."
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:contentDescription="Edad del usuario"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnEditarPerfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Editar Perfil"
+        android:textSize="18sp"
+        android:backgroundTint="@color/teal_700"
+        android:contentDescription="Botón para editar el perfil"/>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cerrar Sesión"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/red"
+        android:contentDescription="Botón para cerrar sesión"/>
+
+</LinearLayout>

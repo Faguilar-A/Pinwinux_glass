@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="Lentes Inteligentes"
+            app:titleTextColor="@color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sistema de Asistencia"
+                android:textSize="24sp"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"/>
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/pinwinux"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="Icono de lentes inteligentes"
+                android:layout_marginBottom="40dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sistema de asistencia para personas con discapacidad visual que utiliza sensores de distancia Arduino"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:layout_marginBottom="50dp"/>
+
+            <Button
+                android:id="@+id/btnIniciar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Iniciar Detección"
+                android:textSize="18sp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/teal_700"/>
+
+            <Button
+                android:id="@+id/btnHistorial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Historial"
+                android:textSize="18sp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/teal_700"/>
+
+            <Button
+                android:id="@+id/btnConfiguracion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Configuración"
+                android:textSize="18sp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/teal_700"/>
+
+            <Button
+                android:id="@+id/btnAcercaDe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Acerca de"
+                android:textSize="18sp"
+                android:backgroundTint="@color/teal_700"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

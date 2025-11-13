@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="@drawable/background_gradient"
+    tools:context=".RegistroActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear Cuenta"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"/>
+
+    <EditText
+        android:id="@+id/etNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre Completo"
+        android:textColorHint="#B0FFFFFF"
+        android:textColor="@color/white"
+        android:inputType="textPersonName"
+        android:backgroundTint="@color/white"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/etCorreo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Correo Electrónico"
+        android:textColorHint="#B0FFFFFF"
+        android:textColor="@color/white"
+        android:inputType="textEmailAddress"
+        android:backgroundTint="@color/white"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/etEdad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Edad"
+        android:textColorHint="#B0FFFFFF"
+        android:textColor="@color/white"
+        android:inputType="number"
+        android:backgroundTint="@color/white"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:textColorHint="#B0FFFFFF"
+        android:textColor="@color/white"
+        android:inputType="textPassword"
+        android:backgroundTint="@color/white"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registrarme"
+        android:textSize="18sp"
+        android:backgroundTint="@color/teal_700"/>
+
+    <TextView
+        android:id="@+id/tvIrALogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Ya tienes cuenta? Inicia Sesión"
+        android:textColor="@color/white"
+        android:layout_marginTop="24dp"/>
+
+</LinearLayout>
