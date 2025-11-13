@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull; // Importante
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar; // Importante
+import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     @Override

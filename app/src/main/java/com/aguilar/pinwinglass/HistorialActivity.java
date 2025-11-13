@@ -81,7 +81,7 @@ public class HistorialActivity extends AppCompatActivity {
             db.close();
         }
     }
-    // --- NUEVOS MÉTODOS AÑADIDOS ---
+
 
     private void mostrarDialogoConfirmacion() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUsuario() {
-        SQLiteDatabase db = adminDB.getReadableDatabase(); // [cite: 188]
+        SQLiteDatabase db = adminDB.getReadableDatabase();
         String correo = etCorreoLogin.getText().toString();
         String password = etPasswordLogin.getText().toString();
 
@@ -56,15 +56,15 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Hacemos la consulta [cite: 189]
+        // Hacemos la consulta
         Cursor cursor = db.rawQuery("SELECT id, nombre FROM usuarios WHERE correo = ? AND password = ?",
                 new String[]{correo, password});
 
-        // Verificamos si el cursor encontró un resultado [cite: 191]
+        // Verificamos si el cursor encontró un resultado
         if (cursor.moveToFirst()) {
             // Usuario y contraseña correctos
-            int userId = cursor.getInt(0); // [cite: 194]
-            String userName = cursor.getString(1); // [cite: 197]
+            int userId = cursor.getInt(0);
+            String userName = cursor.getString(1);
 
             // Guardamos la sesión
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show();
         }
 
-        cursor.close(); // [cite: 201]
-        db.close(); // [cite: 202]
+        cursor.close();
+        db.close();
     }
 }

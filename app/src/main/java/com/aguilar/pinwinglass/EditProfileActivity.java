@@ -40,14 +40,14 @@ public class EditProfileActivity extends AppCompatActivity {
         loggedInUserId = sharedPreferences.getInt(LoginActivity.KEY_USER_ID, 0);
 
         if (loggedInUserId > 0) {
-            // 1. Cargamos los datos actuales en los campos
+            //Cargamos los datos actuales en los campos
             cargarDatosUsuario(loggedInUserId);
         } else {
             Toast.makeText(this, "Error: No se encontró usuario", Toast.LENGTH_SHORT).show();
             finish();
         }
 
-        // 2. Listener para guardar
+        // Listener para guardar
         btnGuardarCambios.setOnClickListener(v -> actualizarUsuario(loggedInUserId));
 
         btnEliminarCuenta.setOnClickListener(v -> {
@@ -101,7 +101,7 @@ public class EditProfileActivity extends AppCompatActivity {
             editor.putString(LoginActivity.KEY_USER_NAME, nombre);
             editor.apply();
 
-            finish(); // ¡Importante! Cerramos esta activity y volvemos al Perfil
+            finish(); //Cerramos esta activity y volvemos al Perfil
         } else {
             Toast.makeText(this, "Error al actualizar el perfil", Toast.LENGTH_SHORT).show();
         }
@@ -138,26 +138,25 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
          //Lógica para Eliminar (DELETE) el usuario de la BD.
-         //Adaptado del PDF [cite: 323]
 
         private void eliminarUsuario(int id) {
-            SQLiteDatabase db = adminDB.getWritableDatabase(); // [cite: 324]
+            SQLiteDatabase db = adminDB.getWritableDatabase();
 
-            // Cláusula WHERE para eliminar solo el ID correcto [cite: 326]
+            // Cláusula WHERE para eliminar solo el ID correcto
             String selection = "id = ?";
-            String[] selectionArgs = { String.valueOf(id) }; // [cite: 327]
+            String[] selectionArgs = { String.valueOf(id) };
 
-            // Ejecutamos el delete [cite: 328]
-            int deletedRows = db.delete("usuarios", selection, selectionArgs); // [cite: 328]
+            // Ejecutamos el delete
+            int deletedRows = db.delete("usuarios", selection, selectionArgs);
 
             db.close(); // [cite: 329]
 
-            if (deletedRows > 0) { // [cite: 330]
-                Toast.makeText(this, "Cuenta eliminada con éxito", Toast.LENGTH_SHORT).show(); // [cite: 331]
+            if (deletedRows > 0) {
+                Toast.makeText(this, "Cuenta eliminada con éxito", Toast.LENGTH_SHORT).show();
                 // Si se eliminó, también cerramos la sesión y redirigimos
                 limpiarSesionYRedirigir();
             } else {
-                Toast.makeText(this, "Error al eliminar la cuenta", Toast.LENGTH_SHORT).show(); // [cite: 333]
+                Toast.makeText(this, "Error al eliminar la cuenta", Toast.LENGTH_SHORT).show();
             }
         }
 

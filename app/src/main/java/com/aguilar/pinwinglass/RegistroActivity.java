@@ -16,7 +16,7 @@ public class RegistroActivity extends AppCompatActivity {
     EditText etNombre, etCorreo, etEdad, etPassword;
     Button btnGuardar;
     TextView tvIrALogin;
-    AdminSQLiteOpenHelper adminDB; // [cite: 365]
+    AdminSQLiteOpenHelper adminDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,57 +30,57 @@ public class RegistroActivity extends AppCompatActivity {
         btnGuardar = findViewById(R.id.btnGuardar);
         tvIrALogin = findViewById(R.id.tvIrALogin);
 
-        // Inicializamos el Helper de la BD [cite: 365-366]
+        // Inicializamos el Helper de la BD
         adminDB = new AdminSQLiteOpenHelper(this, "Pinwinux.db", null, 1);
 
-        btnGuardar.setOnClickListener(new View.OnClickListener() { // [cite: 339]
+        btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registrarUsuario(); // [cite: 361]
+                registrarUsuario();
             }
         });
 
         tvIrALogin.setOnClickListener(v -> finish()); // Cierra esta actividad y vuelve a Login
     }
 
-    private void registrarUsuario() { // [cite: 364]
-        // Abrimos BD en modo escritura [cite: 367]
+    private void registrarUsuario() {
+        // Abrimos BD en modo escritura
         SQLiteDatabase db = adminDB.getWritableDatabase();
 
-        String nombre = etNombre.getText().toString(); // [cite: 369]
+        String nombre = etNombre.getText().toString();
         String correo = etCorreo.getText().toString();
         String edadStr = etEdad.getText().toString();
         String password = etPassword.getText().toString();
 
-        // Validamos campos vacíos [cite: 373]
+        // Validamos campos vacíos
         if (nombre.isEmpty() || correo.isEmpty() || edadStr.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show(); // [cite: 374]
-            return; // [cite: 376]
+            Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         int edad = Integer.parseInt(edadStr);
 
-        // Usamos ContentValues para insertar los datos [cite: 343]
+        // Usamos ContentValues para insertar los datos
         ContentValues values = new ContentValues();
         values.put("nombre", nombre);
         values.put("correo", correo);
         values.put("edad", edad);
         values.put("password", password);
 
-        // Insertamos el nuevo registro [cite: 344]
+        // Insertamos el nuevo registro
         try {
-            long newRowId = db.insertOrThrow("usuarios", null, values); // [cite: 345]
+            long newRowId = db.insertOrThrow("usuarios", null, values);
 
             // Verificamos si se insertó correctamente
-            if (newRowId != -1) { // [cite: 347]
-                Toast.makeText(this, "Usuario registrado con éxito (ID: " + newRowId + ")", Toast.LENGTH_SHORT).show(); // [cite: 348]
-                finish(); // Cerramos la actividad y volvemos a Login [cite: 354]
+            if (newRowId != -1) {
+                Toast.makeText(this, "Usuario registrado con éxito (ID: " + newRowId + ")", Toast.LENGTH_SHORT).show();
+                finish(); // Cerramos la actividad y volvemos a Login
             }
         } catch (Exception e) {
             // Esto probablemente ocurra si el correo ya existe (UNIQUE constraint)
             Toast.makeText(this, "Error al registrar el usuario. El correo ya podría estar en uso.", Toast.LENGTH_SHORT).show();
         } finally {
-            db.close(); // Cerramos la base de datos [cite: 346]
+            db.close(); // Cerramos la base de datos
         }
     }
 }
