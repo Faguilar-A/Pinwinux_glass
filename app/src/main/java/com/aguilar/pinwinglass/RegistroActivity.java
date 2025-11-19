@@ -1,6 +1,7 @@
 package com.aguilar.pinwinglass;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -9,20 +10,26 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
 import db.AdminSQLiteOpenHelper;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegistroActivity extends AppCompatActivity {
 
     EditText etNombre, etCorreo, etEdad, etPassword;
     Button btnGuardar;
     TextView tvIrALogin;
+
+    // Variables para Base de Datos
     AdminSQLiteOpenHelper adminDB;
+    FirebaseFirestore dbFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
+        // Vincular vistas
         etNombre = findViewById(R.id.etNombre);
         etCorreo = findViewById(R.id.etCorreo);
         etEdad = findViewById(R.id.etEdad);
@@ -30,29 +37,25 @@ public class RegistroActivity extends AppCompatActivity {
         btnGuardar = findViewById(R.id.btnGuardar);
         tvIrALogin = findViewById(R.id.tvIrALogin);
 
-        // Inicializamos el Helper de la BD
+        // Inicializar Bases de Datos
         adminDB = new AdminSQLiteOpenHelper(this, "Pinwinux.db", null, 1);
+        dbFirestore = FirebaseFirestore.getInstance();
 
-        btnGuardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registrarUsuario();
-            }
-        });
+        // Listener del botón Guardar
+        btnGuardar.setOnClickListener(v -> registrarUsuario());
 
-        tvIrALogin.setOnClickListener(v -> finish()); // Cierra esta actividad y vuelve a Login
+        // Volver al login
+        tvIrALogin.setOnClickListener(v -> finish());
     }
 
     private void registrarUsuario() {
-        // Abrimos BD en modo escritura
-        SQLiteDatabase db = adminDB.getWritableDatabase();
+        // 1. Obtener datos
+        String nombre = etNombre.getText().toString().trim();
+        String correo = etCorreo.getText().toString().trim();
+        String edadStr = etEdad.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
 
-        String nombre = etNombre.getText().toString();
-        String correo = etCorreo.getText().toString();
-        String edadStr = etEdad.getText().toString();
-        String password = etPassword.getText().toString();
-
-        // Validamos campos vacíos
+        // 2. Validación
         if (nombre.isEmpty() || correo.isEmpty() || edadStr.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
             return;
@@ -60,27 +63,42 @@ public class RegistroActivity extends AppCompatActivity {
 
         int edad = Integer.parseInt(edadStr);
 
-        // Usamos ContentValues para insertar los datos
+        // 3. Guardar en SQLite (Local)
+        SQLiteDatabase db = adminDB.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("nombre", nombre);
         values.put("correo", correo);
         values.put("edad", edad);
         values.put("password", password);
 
-        // Insertamos el nuevo registro
         try {
             long newRowId = db.insertOrThrow("usuarios", null, values);
 
-            // Verificamos si se insertó correctamente
             if (newRowId != -1) {
-                Toast.makeText(this, "Usuario registrado con éxito (ID: " + newRowId + ")", Toast.LENGTH_SHORT).show();
-                finish(); // Cerramos la actividad y volvemos a Login
+                // 4. Si se guardó en local, guardar en Firebase (Nube)
+                guardarEnFirebase(nombre, correo, edad);
+
+                Toast.makeText(this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show();
+                finish(); // Cierra la actividad y vuelve al Login
             }
         } catch (Exception e) {
-            // Esto probablemente ocurra si el correo ya existe (UNIQUE constraint)
-            Toast.makeText(this, "Error al registrar el usuario. El correo ya podría estar en uso.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error: El correo ya podría estar registrado", Toast.LENGTH_SHORT).show();
         } finally {
-            db.close(); // Cerramos la base de datos
+            db.close();
         }
+    }
+
+    private void guardarEnFirebase(String nombre, String correo, int edad) {
+        // Usamos la clase modelo Usuario
+        Usuario nuevoUsuario = new Usuario(nombre, correo, edad);
+
+        dbFirestore.collection("usuarios")
+                .add(nuevoUsuario)
+                .addOnSuccessListener(documentReference -> {
+                    System.out.println("Firebase: Usuario agregado ID: " + documentReference.getId());
+                })
+                .addOnFailureListener(e -> {
+                    System.out.println("Firebase Error: " + e.getMessage());
+                });
     }
 }
