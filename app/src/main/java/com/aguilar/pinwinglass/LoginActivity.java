@@ -18,9 +18,9 @@ public class LoginActivity extends AppCompatActivity {
     Button btnIngresar;
     TextView tvIrARegistro;
     AdminSQLiteOpenHelper adminDB;
-
-    // Usaremos SharedPreferences para guardar la sesión del usuario
     SharedPreferences sharedPreferences;
+
+    // Constantes para SharedPreferences
     public static final String PREFS_NAME = "PinwinuxGlassPrefs";
     public static final String KEY_USER_ID = "USER_ID";
     public static final String KEY_USER_NAME = "USER_NAME";
@@ -47,22 +47,27 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUsuario() {
-        SQLiteDatabase db = adminDB.getReadableDatabase();
-        String correo = etCorreoLogin.getText().toString();
-        String password = etPasswordLogin.getText().toString();
+        SQLiteDatabase db = adminDB.getReadableDatabase(); // Abrimos en modo lectura
 
-        if (correo.isEmpty() || password.isEmpty()) {
+        String correo = etCorreoLogin.getText().toString().trim();
+        String passwordIngresada = etPasswordLogin.getText().toString().trim();
+
+        if (correo.isEmpty() || passwordIngresada.isEmpty()) {
             Toast.makeText(this, "Complete todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Hacemos la consulta
-        Cursor cursor = db.rawQuery("SELECT id, nombre FROM usuarios WHERE correo = ? AND password = ?",
-                new String[]{correo, password});
+        // --- PASO CLAVE ---
+        // El usuario escribió "123456", pero en la BD tenemos "8d969..."
+        // Así que encriptamos lo que escribió para ver si el resultado coincide.
+        String passwordHashAComparar = Seguridad.hashPassword(passwordIngresada);
 
-        // Verificamos si el cursor encontró un resultado
+        // Consulta SQL: Buscamos donde coincida el correo Y el hash de la contraseña
+        Cursor cursor = db.rawQuery("SELECT id, nombre FROM usuarios WHERE correo = ? AND password = ?",
+                new String[]{correo, passwordHashAComparar});
+
         if (cursor.moveToFirst()) {
-            // Usuario y contraseña correctos
+            // ¡Coincidencia encontrada! Login exitoso
             int userId = cursor.getInt(0);
             String userName = cursor.getString(1);
 
@@ -74,13 +79,12 @@ public class LoginActivity extends AppCompatActivity {
 
             Toast.makeText(this, "¡Bienvenido, " + userName + "!", Toast.LENGTH_SHORT).show();
 
-            // Vamos a MainActivity
+            // Vamos al Main
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
-            finish(); // Cerramos LoginActivity
-
+            finish();
         } else {
-            // Credenciales incorrectas
+            // No coincide
             Toast.makeText(this, "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show();
         }
 
